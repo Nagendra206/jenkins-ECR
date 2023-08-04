@@ -1,7 +1,7 @@
 pipeline {
     agent any
      environment {
-        registry = "502746322071.dkr.ecr.ap-south-1.amazonaws.com/sample-project"
+        registry = "502746322071.dkr.ecr.ap-south-1.amazonaws.com/demo-ecr"
     }
    
     stages {
@@ -23,7 +23,7 @@ pipeline {
                   script {
                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS Credentials for ECR', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
     sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 502746322071.dkr.ecr.ap-south-1.amazonaws.com'
-     sh 'docker push 502746322071.dkr.ecr.ap-south-1.amazonaws.com/sample-project:myapp'
+     sh 'docker push 502746322071.dkr.ecr.ap-south-1.amazonaws.com/demo-ecr:myapp'
 }
 
 }
@@ -38,7 +38,7 @@ pipeline {
             stage('Docker Run') {
               steps{
                    script {
-                sh 'docker run -d -p 5000:5000 --rm --name mypythonContainer 502746322071.dkr.ecr.ap-south-1.amazonaws.com/demo-project:myapp'     
+                sh 'docker run -d -p 8096:5000 --rm --name mypythonContainer 502746322071.dkr.ecr.ap-south-1.amazonaws.com/demo-ecr:myapp'     
       }
     }
         }
