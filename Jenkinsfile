@@ -21,7 +21,7 @@ pipeline {
             stage('Pushing to ECR') {
              steps{  
                   script {
-               withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS Credentials for ECR', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+               withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws_cred', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
     sh 'aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 502746322071.dkr.ecr.ap-south-1.amazonaws.com'
      sh 'docker push 502746322071.dkr.ecr.ap-south-1.amazonaws.com/demo-ecr:myapp'
 }
